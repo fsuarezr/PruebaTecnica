@@ -2,11 +2,15 @@
 
 const Sequelize = require('sequelize');
 const models = require('./models');
+const config = require('@config')
+const dbConfig = config.services.database
 
 let sequelize;
 
-sequelize = new Sequelize("sqlite::memory:", {
-  logging: false //console.log
+sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
+  dialect: dbConfig.dialect,
+  host: dbConfig.host,
+  port: dbConfig.port,
 });
 
 const db = {
