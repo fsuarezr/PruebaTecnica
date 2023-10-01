@@ -3,18 +3,28 @@
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "module-alias": "^2.2.3",
     "node-fetch": "^2.6.7",
     "nodemon": "^2.0.19",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.21.2",
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.8"
   },
   "name": "PruebaTecnicaHolafly",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "Prueba Técnica de Holafly",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --watch ./src index.js"
+  },
+  "_moduleAliases": {
+    "@": ".",
+    "@config": "src/config",
+    "@app": "src/api",
+    "@server": "src/services"
   }
 }

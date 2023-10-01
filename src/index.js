@@ -1,4 +1,6 @@
+require(`module-alias/register`)
 
+const config = require('@config')
 
 const bodyParser = require('body-parser');
 
@@ -14,7 +16,7 @@ async function start() {
   });
 
 	// Start the GraphQL server
-  const port = process.env.PORT || 4567;
+  const port = config.port;
 	server.listen(port , () => {
 		// eslint-disable-next-line no-console
 		console.log(`Server is running on port: ${port}`);
