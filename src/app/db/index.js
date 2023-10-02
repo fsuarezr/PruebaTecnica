@@ -11,6 +11,7 @@ sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
   dialect: dbConfig.dialect,
   host: dbConfig.host,
   port: dbConfig.port,
+  logging: false
 });
 
 const db = {
