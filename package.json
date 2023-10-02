@@ -24,7 +24,7 @@
   "_moduleAliases": {
     "@": ".",
     "@config": "src/config",
-    "@app": "src/api",
+    "@app": "src/app",
     "@server": "src/services"
   }
 }
