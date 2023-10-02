@@ -38,12 +38,15 @@ class AbstractPeople {
     }
 
     getWeightOnPlanet(planetId, planetGravity){
+
+        console.log({planetGravity})
+        console.log(isNaN(parseFloat(planetGravity)));
         
-        if(this.homeworlId === planetId) return "You're trying to calculate the weight of a Character on their same planet"
+        if(+this.getHomeworlId() === planetId) throw new Error("You're trying to calculate the weight of a Character on their home planet")
 
-        if(!isNaN(parseFloat(planetGravity)) && isFinite(planetGravity)) return "Can not calculate the weight of the character on the planet because the gravity of that planet is unknow"
+        if(isNaN(parseFloat(planetGravity))) throw new Error(`Can not calculate the weight of the character on the planet because the gravity of that planetId: ${planetId} is unknown`)
 
-        const weightCharacter = planetGravity * this.getMass
+        const weightCharacter = planetGravity * this.getMass()
         
         return weightCharacter
     }
