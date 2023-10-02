@@ -44,7 +44,22 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
-        res.sendStatus(501);
+        const peopleId = Math.floor(Math.random() * 82) + 1
+        const planetId = Math.floor(Math.random() * 60) + 1
+
+        const people = await app.people.peopleFactory(peopleId,false, app)
+
+        const planet = await app.planet.planetFactory(planetId, app)
+
+        const weightCharacter = await people.getWeightOnPlanet(planetId, planet.gravity)
+
+        res.send({
+            peopleId,
+            name: people.getName(),
+            planetId,
+            planetName: planet.name,
+            weightCharacter
+        });
     });
 
     server.get('/hfswapi/getLogs',async (req, res) => {

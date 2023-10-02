@@ -27,7 +27,7 @@ class Planet {
 
     calculateGravity(gravity) {
 
-        if(["N/A", "unknown"].includes(gravity)) return "Gravedad desconocida"
+        if(["N/A", "unknown"].includes(gravity)) return "Unknown gravity"
 
         const gravityStandar = 9.8
         const regex = /(\d+(\.\d+)?)/;
