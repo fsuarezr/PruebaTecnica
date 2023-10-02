@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         'logging',{
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
             action: DataTypes.STRING,
-            header: DataTypes.STRING,
+            header: DataTypes.TEXT,
             ip: DataTypes.STRING,
         }
     );
