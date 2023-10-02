@@ -1,6 +1,9 @@
 class AbstractPeople {
 
-    constructor(id) {
+    constructor(id, app) {
+        this.id = id
+        this.app = app
+
         if (this.constructor == AbstractPeople) {
             throw new Error("Abstract classes can't be instantiated.");
         }
@@ -11,30 +14,32 @@ class AbstractPeople {
     }
 
     getId() {
-       return this.id;
+       return this.id
     }
 
     getName() {
-        return this.name;
+        return this.name || this.whrascwo
     }
 
     getMass() {
-        return this.mass;
+        return this.mass || this.scracc
     }
 
     getHeight() {
-        return this.height;
+        return this.height || this.acwoahrracao
     }
 
     getHomeworldName() {
-        return this.homeworldName;
+        return this.homeworldName || this.whrascwoPlanet
     }
 
     getHomeworlId() {
-        return this.homeworlId;
+        return this.homeworlId || this.acooscwoohoorcanwa
     }
 
     getWeightOnPlanet(planetId){
         throw new Error('To be implemented');
     }
 }
+
+module.exports = AbstractPeople

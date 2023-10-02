@@ -12,7 +12,7 @@ if (envFound.error) {
 module.exports = {
   port: parseInt(process.env.NODE_PORT, 10) || 4567,
 
-  verifyToken: process.env.VERIFY_TOKEN,
+  swapiUrl: process.env.SWAPI_URL,
 
   /**
    * API configs
