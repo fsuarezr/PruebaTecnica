@@ -67,3 +67,13 @@ El presente código despliega un servidor node.js/express sobre el que se busca 
 
 
 Adicionalmente a estos endpoints, se requiere ampliar el paquete `People` con las clases y funciones que sean necesarias para cubrir el caso de que el formato del objeto retornado por la SWAPI sea en idioma Wookiee.
+
+
+---
+## MEJORAS AÑADIDAS
+#### Dockerización de los servicios
+> Decidí trabajar con PostgreSQL para esta prueba técnica y decidí dockerizar este servicio y agregar la configuración para la BD en Docker. Para levantar los microservicio dockerizados correr el siguiente comando en la terminal:
+> > _docker-compose -f docker-compose.yml up -d --build --force-recreate_ 
+
+#### /hfswapi/seedDatabase
+> Agregué un endpoint para llenar la BD con los primeros 5 personajes y planetas obtenidos de SWAPI y así poder testear los demás endpoints cuando exista data en la BD y no necesiten consultar a SWAPI.
