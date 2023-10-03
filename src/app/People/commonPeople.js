@@ -17,15 +17,18 @@ class CommonPeople extends AbstractPeople {
         if(!people) {
             console.log(`Inicia consulta a la API de SWAPI para obtener personaje de Star Wars`)
             people = await this.app.swapiFunctions.genericRequest(`${swapiUrl}/people/${this.id}`,'GET',null)
+        } else {
+            people = people.dataValues            
         }
 
         console.log(`Inicia consulta a la API de SWAPI para obtener el planeta al que pertenece el personaje de Star Wars`)
-        const world = await this.app.swapiFunctions.genericRequest( people.homeworld, "GET", null)
+        const url = (people.homeworld) ? people.homeworld : `${swapiUrl}/planets/${people.homeworld_id}`
+        const world = await this.app.swapiFunctions.genericRequest(url, "GET", null)
 
         this.name = people.name
         this.height = people.height
         this.mass = people.mass
-        this.homeworlId = people.homeworld.split('/').filter(Boolean).pop()
+        this.homeworlId = (people.homeworld_id) ? people.homeworld_id: people.homeworld.split('/').filter(Boolean).pop()
         this.homeworldName = world.name
     }
 }

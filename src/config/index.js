@@ -15,24 +15,6 @@ module.exports = {
   swapiUrl: process.env.SWAPI_URL,
 
   /**
-   * API configs
-   */
-  api: {
-    prefix: '/api',
-    routeService: process.env.ROUTE_SERVICE
-  },
-
-  /**
-   * Used by winston logger
-   */
-   logs: {
-    level: process.env.LOG_LEVEL || 'silly',
-  },
-
-  messageError: process.env.ERROR_MESSAGE,
-  
-
-  /**
    * Environment External Services
    */
   services: {
