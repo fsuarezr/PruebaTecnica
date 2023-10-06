@@ -25,6 +25,6 @@
     "@": ".",
     "@config": "src/config",
     "@app": "src/app",
-    "@server": "src/services"
+    "@server": "src/server"
   }
 }

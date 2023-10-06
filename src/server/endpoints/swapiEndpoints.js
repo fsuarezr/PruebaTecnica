@@ -1,5 +1,6 @@
 const db = require("@app/db")
 const { swapiUrl } = require('@config')
+const validateId = require('@server/middlewares/validateIdMiddleware')
 
 const _isWookieeFormat = (req) => {
     if (req.query.format && req.query.format == 'wookiee') {
@@ -16,7 +17,7 @@ const applySwapiEndpoints = (server, app) => {
         res.send(data);
     });
 
-    server.get('/hfswapi/getPeople/:id', async (req, res) => {
+    server.get('/hfswapi/getPeople/:id', validateId, async (req, res) => {
         console.log(' ')
         console.log('==================')
         console.log(`Inicia consulta de Personaje con id:${req.params.id}`)
@@ -50,7 +51,7 @@ const applySwapiEndpoints = (server, app) => {
 
     });
 
-    server.get('/hfswapi/getPlanet/:id', async (req, res) => {
+    server.get('/hfswapi/getPlanet/:id', validateId, async (req, res) => {
         console.log(' ')
         console.log('==================')
         console.log(`Inicia consulta de Planeta con id:${req.params.id}`)
