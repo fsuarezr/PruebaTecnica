@@ -91,11 +91,13 @@ const applySwapiEndpoints = (server, app) => {
             console.log(`Id de personaje aleatorio: ${peopleId}`)
             console.log(`Id de planeta aleatorio: ${planetId}`)
 
-            const planet = await app.planet.planetFactory(planetId, app)
-            const people = await app.people.peopleFactory(peopleId, false, app)
-
-            console.log(`Calculando el peso de: ${people.getName()} en planeta: ${planet.getName()} `)
-
+            const [planet, people] = await Promise.all([
+                app.planet.planetFactory(planetId, app),
+                app.people.peopleFactory(peopleId, false, app)
+            ]);
+    
+            console.log(`Calculando el peso de: ${people.getName()} en planeta: ${planet.getName()}`)
+    
             const weightCharacter = await people.getWeightOnPlanet(planetId, planet.gravity)
 
             console.log(`Termina la consulta, armando respuesta de servicio`)
