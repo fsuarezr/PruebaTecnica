@@ -22,18 +22,18 @@ const applySwapiEndpoints = (server, app) => {
         console.log(`Inicia consulta de Personaje con id:${req.params.id}`)
 
         try {
-            
+
             const isWookie = _isWookieeFormat(req)
             const peopleId = req.params.id
-    
+
             console.log(`La consulta está en lenguaje wookie:${isWookie}`)
-    
+
             const data = await app.people.peopleFactory(peopleId, isWookie, app)
-    
+
             console.log(`Termina consulta de Personaje con id:${req.params.id}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-    
+
             res.send({
                 name: data.getName(),
                 height: data.getHeight(),
@@ -45,7 +45,7 @@ const applySwapiEndpoints = (server, app) => {
             console.log(`Termina consulta de Personaje con error:${error.message}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-            res.send({messageError: error.message})
+            res.send({ messageError: error.message })
         }
 
     });
@@ -56,15 +56,15 @@ const applySwapiEndpoints = (server, app) => {
         console.log(`Inicia consulta de Planeta con id:${req.params.id}`)
 
         try {
-            
+
             const planetId = req.params.id
-    
+
             const data = await app.planet.planetFactory(planetId, app)
-    
+
             console.log(`Termina consulta de Planeta con id:${req.params.id}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-    
+
             res.send({
                 name: data.getName(),
                 gravity: data.getGravity()
@@ -74,7 +74,7 @@ const applySwapiEndpoints = (server, app) => {
             console.log(`Termina consulta de Planeta con error:${error.message}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-            res.send({messageError: error.message})
+            res.send({ messageError: error.message })
         }
 
 
@@ -114,7 +114,7 @@ const applySwapiEndpoints = (server, app) => {
             console.log(`Termina consulta de peso de un personaje con error:${error.message}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-            res.send({messageError: error.message})
+            res.send({ messageError: error.message })
         }
 
     });
@@ -134,35 +134,52 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/seedDatabase', async (req, res) => {
-        console.log(' ')
-        console.log('==================')
-        console.log(`Inicia población de data en BD`)
-
         try {
-            console.log(`Creando los primeros 10 personajes de StarWars`)
-            for (let i = 1; i < 6; i++) {
-                const people = await app.people.peopleFactory(i, false, app)
-                await app.db.swPeople.create({name: people.getName(), height: people.getHeight(), mass: people.getMass(), homeworld_name: people.getHomeworldName(), homeworld_id: people.getHomeworlId()})
-            }
+            console.log(' ');
+            console.log('==================');
+            console.log('Inicia población de data en BD');
 
-            console.log(' ')
-            console.log(`Creando los primeros 10 planetas de StarWars`)
-            for (let i = 1; i < 5; i++) {
-                const planet = await app.planet.planetFactory(i, app)
-                await app.db.swPlanet.create({name: planet.getName(), gravity: planet.getGravity()})
-            }
+            const createPeoplePromises = Array.from({ length: 5 }, (_, i) => i + 1)
+                .map(async i => {
+                    const people = await app.people.peopleFactory(i, false, app);
+                    return {
+                        name: people.getName(),
+                        height: people.getHeight(),
+                        mass: people.getMass(),
+                        homeworld_name: people.getHomeworldName(),
+                        homeworld_id: people.getHomeworlId()
+                    };
+                });
 
-            console.log(`Termina la consulta, armando respuesta de servicio`)
-            console.log('==================')
-            console.log(' ')
+            const createPlanetPromises = Array.from({ length: 4 }, (_, i) => i + 1)
+                .map(async i => {
+                    const planet = await app.planet.planetFactory(i, app);
+                    return {
+                        name: planet.getName(),
+                        gravity: planet.getGravity()
+                    };
+                });
 
-            res.send({message:'Database seeded'})
-            
+            const [createdPeople, createdPlanets] = await Promise.all([
+                Promise.all(createPeoplePromises),
+                Promise.all(createPlanetPromises)
+            ]);
+
+            await Promise.all(createdPeople.map(data => app.db.swPeople.create(data)));
+            await Promise.all(createdPlanets.map(data => app.db.swPlanet.create(data)));
+
+            console.log(' ');
+            console.log('Termina la consulta, armando respuesta de servicio');
+            console.log('==================');
+            console.log(' ');
+
+            res.send({ message: 'Database seeded' });
+
         } catch (error) {
             console.log(`Termina consulta de peso de un personaje con error:${error.message}, armando respuesta de servicio`)
             console.log('==================')
             console.log(' ')
-            res.send({messageError: error.message})
+            res.send({ messageError: error.message })
         }
 
     });
